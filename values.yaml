@@ -3,7 +3,7 @@ fullnameOverride: ""
 
 image:
   repository: nousresearch/hermes-agent
-  tag: "0.8.0"
+  tag: "v2026.5.29.2"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
