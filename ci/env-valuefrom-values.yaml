@@ -1,0 +1,10 @@
+# Regression fixture: a map-valued env entry (valueFrom) must render as YAML.
+# Before the fix the chart emitted `value: "map[valueFrom:map[secretKeyRef:...]]"`
+# as the env var's literal value.
+env:
+  PLAIN_SETTING: hola
+  FROM_SECRET:
+    valueFrom:
+      secretKeyRef:
+        name: example-secret
+        key: example-key
