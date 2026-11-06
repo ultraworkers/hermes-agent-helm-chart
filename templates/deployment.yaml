@@ -197,7 +197,14 @@ spec:
             {{- end }}
             {{- range $key, $value := .Values.env }}
             - name: {{ $key }}
-              value: {{ printf "%v" $value | quote }}
+              {{- if kindIs "string" $value }}
+              value: {{ $value | quote }}
+              {{- else }}
+              {{- /* A map entry (e.g. valueFrom.secretKeyRef) must render as YAML, not as
+                     the %v stringification `map[valueFrom:map[secretKeyRef:...]]`: that
+                     literal then becomes the env var's value. */}}
+              {{- toYaml $value | nindent 14 }}
+              {{- end }}
             {{- end }}
             {{- if $apiServerEnabled }}
             - name: API_SERVER_ENABLED
